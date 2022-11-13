@@ -7,8 +7,7 @@ class Flat(models.Model):
     owner = models.CharField('ФИО владельца', max_length=200)
     owner_pure_phone = PhoneNumberField(
         verbose_name=' Нормализованный номер владельца',
-        blank=True,
-        region='RU')
+        blank=True)
     owners_phonenumber = models.CharField('Номер владельца', max_length=20)
     new_building = models.BooleanField(null=True, blank=True)
     created_at = models.DateTimeField(
@@ -52,15 +51,25 @@ class Flat(models.Model):
         null=True,
         blank=True,
         db_index=True)
-    liked_by = models.ManyToManyField(User, verbose_name='кто лайкнул', related_name='liked_flats')
+    liked_by = models.ManyToManyField(
+        User,
+        verbose_name='кто лайкнул',
+        related_name='liked_flats')
 
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
 
 
 class Complaint(models.Model):
-    person = models.ForeignKey(User, verbose_name='Кто жаловался', on_delete=models.CASCADE, null=True)
-    flat = models.ForeignKey(Flat, verbose_name='Квартира, на которую пожаловались', on_delete=models.CASCADE)
+    person = models.ForeignKey(
+        User,
+        verbose_name='Кто жаловался',
+        on_delete=models.CASCADE,
+        null=True)
+    flat = models.ForeignKey(
+        Flat,
+        verbose_name='Квартира, на которую пожаловались',
+        on_delete=models.CASCADE)
     text = models.TextField('Текст жалобы', blank=True)
 
     def __str__(self):
