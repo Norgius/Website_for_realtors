@@ -6,7 +6,8 @@ import phonenumbers as ph
 
 def get_pure_phone(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
-    for flat in Flat.objects.all():
+    flat_set = Flat.objects.all()
+    for flat in flat_set.iterator(chunk_size=2000):
         phonenumber = ph.parse(flat.owners_phonenumber, 'RU')
         if ph.is_valid_number(phonenumber):
             flat.owner_pure_phone = ph.format_number(
