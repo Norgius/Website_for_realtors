@@ -57,11 +57,13 @@ class Complaint(models.Model):
     person = models.ForeignKey(
         User,
         verbose_name='Кто жаловался',
+        related_name='сomplaints',
         on_delete=models.CASCADE,
         null=True)
     flat = models.ForeignKey(
         Flat,
         verbose_name='Квартира, на которую пожаловались',
+        related_name='сomplaints',
         on_delete=models.CASCADE)
     text = models.TextField('Текст жалобы', blank=True)
 
